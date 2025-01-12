@@ -1,18 +1,28 @@
 //import './../style/style.css'; # Done from the html page. I remember that css shouldn't be imported from script anyway.
-import * as THREE from './../../node_modules/three/build/three.module.js';
+import * as THREE from '/node_modules/three/build/three.module.js';
 // importing orbital controls for the camera
-import {GLTFLoader} from 'three/addons';
-import {
-    BloomPass,
-    EffectComposer,
-    OrbitControls,
-    OutputPass,
-    RenderPass,
-    ShaderPass,
-    TransformControls,
-    UnrealBloomPass
-} from "three/addons";
-import Stats from './../../node_modules/three/examples/jsm/libs/stats.module.js';
+import {GLTFLoader} from '/node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+// import {
+//     BloomPass,
+//     EffectComposer,
+//     OrbitControls,
+//     OutputPass,
+//     RenderPass,
+//     ShaderPass,
+//     TransformControls,
+//     UnrealBloomPass
+// } from "three/addons";
+
+import { BloomPass } from '/node_modules/three/examples/jsm/postprocessing/BloomPass.js';
+import { EffectComposer } from '/node_modules/three/examples/jsm/postprocessing/EffectComposer.js';
+import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitControls.js';
+import { OutputPass } from '/node_modules/three/examples/jsm/postprocessing/OutputPass.js';
+import { RenderPass } from '/node_modules/three/examples/jsm/postprocessing/RenderPass.js';
+import { ShaderPass } from '/node_modules/three/examples/jsm/postprocessing/ShaderPass.js';
+import { TransformControls } from '/node_modules/three/examples/jsm/controls/TransformControls.js';
+import { UnrealBloomPass } from '/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js';
+
+import Stats from '/node_modules/three/examples/jsm/libs/stats.module.js';
 
 import {setupGUI} from './../gui.js';
 
@@ -21,14 +31,12 @@ import {Planet} from './../classes/Planet.js';
 import {selectiveFragment, selectiveVertex} from './../post_processing/selective_bloom.js';
 import {ShaderToonOutline} from './../materials/ShaderToonMaterial.js';
 import {CameraManager} from "./CameraManager.js";
-import {DebugManager} from "./DebugManager.js";
 
 export class GameManager {
     // fields
     canvas;
     scene;
     camManager;
-    debugManager;
     renderer;
     transformControls;
     stats;
@@ -88,7 +96,6 @@ export class GameManager {
         this.canvas = canvas;
         this.scene = null;
         this.camManager = null;
-        this.debugManager = null;
         this.renderer = null;
         this.transformControls = null;
         this.stats = null;
@@ -141,12 +148,8 @@ export class GameManager {
         // Init Scene
         this.initScene();
 
-        // Initialize DebugManager
-        this.initDebugManager();
-
         // Add EventListeners
         this.addEventListeners();
-
     }
 
     // Initialize the Game Loop
@@ -245,7 +248,8 @@ export class GameManager {
         });
         this.scene.add(this.transformControls.getHelper());	// Restore transformControls
         this.renderer.setClearColor(this.backgroundColor);	// Restore background
-
+        
+        
         // to update world-matrix for camera
         this.camManager.updateCameraView();
         this.finalComposer.render();
@@ -254,6 +258,10 @@ export class GameManager {
 
     initRenderer() {
         this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
+        
+        // Wrecks up FPS A LOT!!
+        // this.renderer.shadowMap.enabled = true;
+        
         // Set the size of the canvas for best visual experience
         this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
@@ -297,9 +305,6 @@ export class GameManager {
 
         // OrbitControls Event Listener
         this.camManager.addEventListeners();
-
-        // DebugManager Event Listener
-        this.debugManager.addDebugEventListeners();
 
         // TransformControls Event Listener
         this.addTransformControlEventListeners();
@@ -384,6 +389,14 @@ export class GameManager {
             }
 
             this.raycaster.setFromCamera(this.mouse, this.camManager.camera);
+            // Raycasting visualize debugging
+            const rayLineGeometry = new THREE.BufferGeometry().setFromPoints([
+                this.raycaster.ray.origin,
+                this.raycaster.ray.origin.clone().add(this.raycaster.ray.direction.multiplyScalar(30)) // Extend ray
+            ]);
+            const rayLineMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
+            const rayLine = new THREE.Line(rayLineGeometry, rayLineMaterial);
+            this.scene.add(rayLine);
             
             const intersects = this.raycaster.intersectObjects(this.scene.children, true);
             if (intersects.length > 0) {
@@ -417,9 +430,6 @@ export class GameManager {
                 }
 
                 this.previousSelectedObject = this.selectedObject; // Şu anki objeyi önceki objeye aktar
-
-                // Debug
-                if(this.debugManager.isDebugMode) this.debugManager.debugRaycaster();
 
                 console.log("Selected Object:", this.selectedObject);
 
@@ -646,10 +656,5 @@ export class GameManager {
             obj.material = this.materials[obj.uuid];
             delete this.materials[obj.uuid];
         }
-    }
-
-    initDebugManager() {
-        this.debugManager = new DebugManager(this.renderer, this.scene);
-        this.debugManager.initRaycaster(this.raycaster);
     }
 }

@@ -1,7 +1,7 @@
-import * as THREE from "./../../node_modules/three/build/three.module";
+import * as THREE from "./../../node_modules/three/build/three.module.js";
 
-import { phongVertex } from "./shaders/phong_shading";
-import { phongFragment } from "./shaders/phong_shading";
+import { phongVertex } from "./shaders/phong_shading.js";
+import { phongFragment } from "./shaders/phong_shading.js";
 
 export class ShaderPhongMaterial extends THREE.ShaderMaterial {
 

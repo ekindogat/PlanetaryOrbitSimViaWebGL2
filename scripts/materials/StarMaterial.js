@@ -1,7 +1,7 @@
-import * as THREE from "./../../node_modules/three/build/three.module";
+import * as THREE from "./../../node_modules/three/build/three.module.js";
 
-import { starVertex } from "./shaders/star_shaders";
-import { starFragment } from "./shaders/star_shaders";
+import { starVertex } from "./shaders/star_shaders.js";
+import { starFragment } from "./shaders/star_shaders.js";
 
 export class StarMaterial extends THREE.ShaderMaterial {
 

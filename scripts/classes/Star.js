@@ -9,9 +9,14 @@ export class Star extends GameObject {
     
     constructor(color) {
         super();
-
+        
         this.light = new THREE.PointLight( 0xffffff, 25 );
-
+        
+        // this.light.castShadow = true;
+        // this.light.shadow.mapSize.height = 4096;
+        // this.light.shadow.mapSize.width = 4096;
+        // this.receiveShadow = true;
+        
         this.switchToPhong();
     }
 
