@@ -32,6 +32,8 @@ export class CreditsManager {
         }
     }
 
+
+
     addCreditsEventListeners(){
         window.addEventListener("keypress", (event) => {
             switch (event.key) {
@@ -43,15 +45,17 @@ export class CreditsManager {
                         console.log("Last camera position: ",lastPos);
                         targetOfOrbitControls = this.cameraManager.orbitControls.target;
                         this.cameraManager.updatePreviousCameraPosition(lastPos);
-
                         // disable orbit controls
                         this.cameraManager.disableOrbitControls();
+                        if(this.creators){
+                            this.removeCredits();
+                        }
+                        // init creators
+                        this.initCreators();
                         // move camera
                         this.smoothCameraAnimation(this.creditsPosition, 2.0, targetOfOrbitControls);
-
                         // Draw - Add Creator Names on Scene
-                        this.addCreditsRelativeToPosition(this.camera, this.creditsPosition);
-
+                        //this.addCreditsRelativeToPosition(this.camera, this.creditsPosition);
                     }
                     else {
                         this.cameraManager.disableOrbitControls();
@@ -78,40 +82,42 @@ export class CreditsManager {
     smoothCameraAnimation(target = { x: 0, y: 0, z: 0 }, duration = 2.0, target_oc) {
         // Disable OrbitControls
         // this.cameraManager.disableOrbitControls();
+
+        this.creditsPosition = {x:-20, y:80, z:-50};
         this.cameraManager.enableOrbitControls();
         this.cameraManager.orbitControls.target = new THREE.Vector3(target.x,target.y, target.y);
 
         // Animate the camera's position
         gsap.to(this.camera.position, {
-            x: target.x + 20,
+            x: target.x + 40,
             y: target.y,
             z: target.z + 50,
             duration: duration,
             onComplete: () => {
                 // Re-enable OrbitControls after animation
                 this.cameraManager.updateCameraManager();
-                this.cameraManager.orbitControls.target = new THREE.Vector3(target.x,target.y,target.z);
+                this.positionCreditsInFrontOfCamera();
+                this.cameraManager.orbitControls.target = new THREE.Vector3(this.creditsPosition.x,this.creditsPosition.y,this.creditsPosition.z);
                 this.cameraManager.enableOrbitControls();
+
             },
         });
     }
-    returnToInitialCameraPosition(target = {x:4, y:4, z:8}, duration = 2.0, target_oc){
-        // this.cameraManager.disableOrbitControls();
-        this.cameraManager.enableOrbitControls();
-        this.cameraManager.orbitControls.target = target_oc;
-        gsap.to(this.camera.position, {
-            x : target.x,
-            y : target.y,
-            z : target.z,
-            duration : duration,
-            onComplete: () => {
-                // this.cameraManager.updateCameraManager();
-                this.cameraManager.orbitControls.update();
-                //this.cameraManager.enableOrbitControls();
-            }
 
-        });
+    positionCreditsInFrontOfCamera(distance = 50) {
+
+        // Compute the target position in front of the camera
+        const cameraPosition = this.camera.position.clone();
+        const forwardVector = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion); // Camera forward direction
+        this.creditsPosition = cameraPosition.add(forwardVector.multiplyScalar(distance));
+
+        // Update the position and orientation of the credits
+        this.creators.position.copy(this.creditsPosition);
+        this.creators.quaternion.copy(this.camera.quaternion);
+
+        this.scene.add(this.creators);
     }
+
     addCreditsRelativeToPosition(camera, offset = this.creditsPosition) {
         // console.log("-- addCreditsRelativeToPosition START --")
         this.initCreators();
@@ -145,6 +151,25 @@ export class CreditsManager {
         // console.log("-- addCreditsRelativeToPosition END --")
 
     }
+
+    returnToInitialCameraPosition(target = {x:4, y:4, z:8}, duration = 2.0, target_oc){
+        // this.cameraManager.disableOrbitControls();
+        this.cameraManager.enableOrbitControls();
+        this.cameraManager.orbitControls.target = target_oc;
+        gsap.to(this.camera.position, {
+            x : target.x,
+            y : target.y,
+            z : target.z,
+            duration : duration,
+            onComplete: () => {
+                // this.cameraManager.updateCameraManager();
+                this.cameraManager.orbitControls.update();
+                //this.cameraManager.enableOrbitControls();
+            }
+
+        });
+    }
+
     createLetter(letter){
         const vertices = this.letterMap[letter];
         if (!vertices || vertices.length === 0) return new THREE.Group();
