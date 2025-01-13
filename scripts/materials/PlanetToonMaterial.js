@@ -1,4 +1,4 @@
-import { ShaderToonMaterial } from "./ShaderToonMaterial";
+import { ShaderToonMaterial } from "./ShaderToonMaterial.js";
 
 // TODO: Doesn't switch to this, fix
 export class PlanetToonMaterial extends ShaderToonMaterial {

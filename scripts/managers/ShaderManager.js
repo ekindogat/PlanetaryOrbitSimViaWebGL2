@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { GameObject } from "../classes/GameObject";
+import { GameObject } from "../classes/GameObject.js";
 
 export class ShaderManager{
 

@@ -1,6 +1,6 @@
-import * as THREE from "./../../node_modules/three/build/three.module";
+import * as THREE from "three";
 
-import { ShaderPhongMaterial } from "./ShaderPhongMaterial";
+import { ShaderPhongMaterial } from "./ShaderPhongMaterial.js";
 
 export class StarPhongMaterial extends ShaderPhongMaterial{
     constructor( lavaTexture, cloudTexture ) {

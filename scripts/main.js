@@ -1,9 +1,20 @@
 //import './../style/style.css'; # Done from the html page. I remember that css shouşdn't be imported from script anyway.
-import * as THREE from './../node_modules/three/build/three.module.js';
+import * as THREE from 'three';
 // importing orbital controls for the camera
-import {GLTFLoader} from './../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-import {BloomPass, EffectComposer, OrbitControls, OutputPass, RenderPass, ShaderPass, TransformControls, UnrealBloomPass} from "three/addons";
-import Stats from './../node_modules/three/examples/jsm/libs/stats.module.js';
+import {GLTFLoader} from 'three-GLTFLoader-module';
+
+
+// import {BloomPass, EffectComposer, OrbitControls, OutputPass, RenderPass, ShaderPass, TransformControls, UnrealBloomPass} from "three/addons";
+import {BloomPass} from "three/addons/postprocessing/BloomPass.js";
+import {EffectComposer} from "three/addons/postprocessing/EffectComposer.js";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
+import {OutputPass} from "three/addons/postprocessing/OutputPass.js";
+import {RenderPass} from "three/addons/postprocessing/RenderPass.js";
+import {ShaderPass} from "three/addons/postprocessing/ShaderPass.js";
+import {TransformControls} from "three/addons/controls/TransformControls.js";
+import {UnrealBloomPass} from "three/addons/postprocessing/UnrealBloomPass.js";
+
+import Stats from 'three-stats-module';
 
 import { setupGUI } from './gui.js';
 

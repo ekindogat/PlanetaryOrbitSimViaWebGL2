@@ -6,6 +6,38 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>BBM412 2024 Fall Project</title>
 
+	<!-- The three-addons versions of modules (rather than ones directly in three) in postprocessing and controls just
+	     set a property to the THREE module instead of exporting it as a module. -->
+	<script type="importmap">
+		{
+			"imports": {
+				"three": "/node_modules/three/build/three.module.js",
+				"three/addons": "/node_modules/three-addons/build/three-addons.min.js",
+				
+				"lil-gui": "/node_modules/lil-gui/dist/lil-gui.esm.min.js",
+				"three-bvh-csg": "/node_modules/three-bvh-csg/build/index.module.js",
+				"three-mesh-bvh": "/node_modules/three-mesh-bvh/build/index.module.js",
+				"gsap": "/node_modules/gsap/index.js",
+				
+				
+				"three/addons/controls/OrbitControls.js": "/node_modules/three/examples/jsm/controls/OrbitControls.js",
+				"three/addons/controls/TransformControls.js": "/node_modules/three/examples/jsm/controls/TransformControls.js",
+				
+				"three/addons/postprocessing/BloomPass.js": "/node_modules/three/examples/jsm/postprocessing/BloomPass.js",
+				"three/addons/postprocessing/UnrealBloomPass.js": "/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js",
+				"three/addons/postprocessing/EffectComposer.js": "/node_modules/three/examples/jsm/postprocessing/EffectComposer.js",
+				"three/addons/postprocessing/OutputPass.js": "/node_modules/three/examples/jsm/postprocessing/OutputPass.js",
+				"three/addons/postprocessing/RenderPass.js": "/node_modules/three/examples/jsm/postprocessing/RenderPass.js",
+				"three/addons/postprocessing/ShaderPass.js": "/node_modules/three/examples/jsm/postprocessing/ShaderPass.js",
+				
+				
+				"three-GLTFLoader-module": "/node_modules/three/examples/jsm/loaders/GLTFLoader.js",
+				"three-stats-module": "/node_modules/three/examples/jsm/libs/stats.module.js",
+				"three/addons-orbitcontrols-module": "/node_modules/three-addons/build/three-addons.min.js",
+				"A": "A"
+			}
+		}
+	</script>
 	<script type="module" src="/scripts/main.js"></script>
 	<link rel="stylesheet" href="/styles/style.css">
 </head>

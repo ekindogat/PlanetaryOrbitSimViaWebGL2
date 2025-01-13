@@ -14,6 +14,9 @@
   "dependencies": {
     "gsap": "^3.12.5",
     "lil-gui": "^0.20.0",
-    "three": "^0.170.0"
+    "three": "^0.170.0",
+    "three-addons": "^1.2.0",
+    "three-bvh-csg": "^0.0.16",
+    "three-mesh-bvh": "^0.8.3"
   }
 }

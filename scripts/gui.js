@@ -1,5 +1,5 @@
 import GUI from 'lil-gui';
-import { Planet } from './classes/Planet';
+import { Planet } from './classes/Planet.js';
 
 let gui = null; // GUI referansı
 let initialValues = {}; // Objelerin ilk değerlerini tutacak

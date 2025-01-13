@@ -1,6 +1,6 @@
-import { GameObject } from '../classes/GameObject';
+import { GameObject } from '../classes/GameObject.js';
 import { Planet } from '../classes/Planet.js';
-import * as THREE from './../../node_modules/three/build/three.module.js';
+import * as THREE from 'three';
 
 export class PhysicsManager {
     

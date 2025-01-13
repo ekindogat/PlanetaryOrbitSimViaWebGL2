@@ -1,4 +1,4 @@
-import { ShaderPhongMaterial } from "./ShaderPhongMaterial";
+import { ShaderPhongMaterial } from "./ShaderPhongMaterial.js";
 
 export class PlanetPhongMaterial extends ShaderPhongMaterial {
     constructor( dayTexture, nightTexture ) {

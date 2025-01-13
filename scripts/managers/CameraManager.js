@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import {OrbitControls} from "three/addons";
+
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 
 export class CameraManager {
     constructor(renderer) {
